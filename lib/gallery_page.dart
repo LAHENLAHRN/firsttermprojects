@@ -10,6 +10,13 @@ class GalleryPage extends StatelessWidget {
     "assets/images/gallery-4.jpg",
     "assets/images/gallery-5.jpg",
     "assets/images/gallery-6.jpg",
+    "assets/images/hot-beverages.png",
+    "assets/images/cold-beverages.png",
+    "assets/images/refreshment.png",
+    "assets/images/special-combo.png",
+    "assets/images/desserts.png",
+    "assets/images/burger-frenchfries.png",
+
   ];
 
   @override

@@ -1,7 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  // رقم الهاتف
+  final String phoneNumber = "+967772622455";
+
+  // فتح تطبيق الاتصال
+  Future<void> _callPhone() async {
+    final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
+    if (!await launchUrl(phoneUri)) {
+      debugPrint('لا يمكن فتح الاتصال');
+    }
+  }
+
+  // فتح واتساب مع رسالة تلقائية
+  Future<void> _openWhatsApp() async {
+    // الرسالة المطلوبة
+    final String message = "مرحباً، أود طلب قهوة 😍☕";
+
+    // ترميز الرسالة
+    final String encodedMessage = Uri.encodeComponent(message);
+
+    // رابط واتساب مع الرسالة
+    final Uri whatsappUri = Uri.parse("https://wa.me/967772622455?text=$encodedMessage");
+
+    if (!await launchUrl(
+      whatsappUri,
+      mode: LaunchMode.externalApplication,
+    )) {
+      debugPrint('لا يمكن فتح واتساب');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,18 +56,18 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
+                  const Text(
                     "أجعل يومك رائعاََ مع قهوتنا الخاصة",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Text(
+                  const Text(
                     "مرحباََ بكم في جنة القهوة حيث تحكي كل حبة قصة وكل فنجان يثير الفرح",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
                     ),
@@ -51,7 +82,7 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
 
-                  // أزرار "اطلب الآن" و "اتصل بنا" أسفل الصورة مباشرة
+                  // أزرار "اتصل الآن" و "واتساب" أسفل الصورة مباشرة
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -59,10 +90,8 @@ class HomePage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFf3961c),
                         ),
-                        onPressed: () {
-                          // رابط طلب الآن
-                        },
-                        child: const Text("اطلب الآن"),
+                        onPressed: _callPhone, // الاتصال
+                        child: const Text("اتصل الآن"),
                       ),
                       const SizedBox(width: 15),
                       OutlinedButton(
@@ -70,10 +99,8 @@ class HomePage extends StatelessWidget {
                           side: const BorderSide(color: Colors.white),
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: () {
-                          // رابط الاتصال
-                        },
-                        child: const Text("اتصل بنا"),
+                        onPressed: _openWhatsApp, // واتساب مع رسالة
+                        child: const Text("واتساب"),
                       ),
                     ],
                   ),
